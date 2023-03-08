@@ -1,5 +1,5 @@
 ﻿/*
-Programul afiseaza un patrat pe care il translateaza pe axa x la apasarea sagetilor stanga, dreapta
+
 */
 #include "glos.h"
 
@@ -7,7 +7,7 @@ Programul afiseaza un patrat pe care il translateaza pe axa x la apasarea sageti
 #include "glu.h"
 #include "glaux.h"
 
-static GLfloat x = 0, y=0;
+static GLfloat x = 0, y = 0, z, alfa=0;
 
 void myInit() {
     glClearColor(1.0, 1.0, 1.0, 1.0);//cod culoare rgb +transparenta
@@ -34,6 +34,17 @@ void CALLBACK MutaJos()
 
 }
 
+void CALLBACK rot_z_up(AUX_EVENTREC* event)
+{
+    alfa = alfa + 10;
+}
+
+void CALLBACK rot_z_down(AUX_EVENTREC* event)
+{
+    alfa = alfa - 10;
+}
+
+
 
 void CALLBACK display()
 {
@@ -41,8 +52,9 @@ void CALLBACK display()
 
     glLoadIdentity();
 
-    glTranslatef(x, y, 0.0);
+    glTranslatef(x, y, 0);
     
+    glRotatef(alfa, 0, 0, 1);
 
     glBegin(GL_QUADS);
     {
@@ -100,6 +112,10 @@ int main(int argc, char** argv)
     auxKeyFunc(AUX_RIGHT, MutaDreapta);
     auxKeyFunc(AUX_UP, MutaSus);
     auxKeyFunc(AUX_DOWN, MutaJos);
+    auxMouseFunc(AUX_LEFTBUTTON, AUX_MOUSEDOWN, rot_z_up);
+    auxMouseFunc(AUX_RIGHTBUTTON, AUX_MOUSEDOWN, rot_z_down);
+    
+
     auxReshapeFunc(myReshape);
     auxMainLoop(display);
     return(0);
