@@ -7,11 +7,11 @@ Programul afiseaza un patrat pe care il translateaza pe axa x la apasarea sageti
 #include "glu.h"
 #include "glaux.h"
 
-static GLfloat x = 0;
+static GLfloat x = 0, y=0;
 
 void myInit() {
-    glClearColor(1.0, 1.0, 1.0, 1.0);
-}
+    glClearColor(1.0, 1.0, 1.0, 1.0);//cod culoare rgb +transparenta
+}//vreau sa curete ecranul cu alb
 
 void CALLBACK MutaStanga()
 {
@@ -23,23 +23,36 @@ void CALLBACK MutaDreapta()
     x = x + 10;
 }
 
+void CALLBACK MutaSus()
+{
+    y = y + 10;
+
+}
+void CALLBACK MutaJos()
+{
+    y = y - 10;
+
+}
+
+
 void CALLBACK display()
 {
     glClear(GL_COLOR_BUFFER_BIT);
 
     glLoadIdentity();
 
-    glTranslatef(x, 0, 0.0);
+    glTranslatef(x, y, 0.0);
+    
 
     glBegin(GL_QUADS);
     {
-        glColor3f(1.0, 0.0, 0.0);
+        glColor3f(1.0, 0.0, 0.0);//setes rosu
         glVertex2f(100, 100);
-        glColor3f(1.0, 1.0, 0.0);
+        glColor3f(1.0, 1.0, 0.0);//setes galben
         glVertex2f(150.0, 100.0);
-        glColor3f(0.0, 0.0, 1.0);
+        glColor3f(0.0, 0.0, 1.0);//setes blue
         glVertex2f(150.0, 150.0);
-        glColor3f(0.0, 1.0, 0.0);
+        glColor3f(0.0, 1.0, 0.0);//setez verde
         glVertex2f(100.0, 150.0);
     }
     glEnd();
@@ -85,7 +98,8 @@ int main(int argc, char** argv)
     myInit();
     auxKeyFunc(AUX_LEFT, MutaStanga);
     auxKeyFunc(AUX_RIGHT, MutaDreapta);
-
+    auxKeyFunc(AUX_UP, MutaSus);
+    auxKeyFunc(AUX_DOWN, MutaJos);
     auxReshapeFunc(myReshape);
     auxMainLoop(display);
     return(0);
