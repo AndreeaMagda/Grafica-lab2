@@ -51,20 +51,16 @@ void CALLBACK display()
 {
     glClear(GL_COLOR_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
-
     glLoadIdentity();
     glPushMatrix();
-   
-
     glTranslatef(x, y, z);
-  
     glRotatef(alfa, 0, 0, 1);
 
 
     glBegin(GL_QUADS);
     {
         glColor3f(1.0, 0.0, 0.0);//setes rosu
-        glVertex2f(100, 100);
+        glVertex2f(0, 0);
         glColor3f(1.0, 1.0, 0.0);//setes galben
         glVertex2f(150.0, 100.0);
         glColor3f(0.0, 0.0, 1.0);//setes blue
@@ -93,10 +89,11 @@ void CALLBACK myReshape(GLsizei w, GLsizei h)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     if (w <= h) {
-        glOrtho(-160.0, 160.0, 160.0 * (GLfloat)h / (GLfloat)w, -160.0 * (GLfloat)h / (GLfloat)w, -10.0, 10.0);
+        glOrtho(0.0, 320.0, 320.0 * (GLfloat)h / (GLfloat)w, 0.0 * (GLfloat)h / (GLfloat)w, -100.0, 100.0);
     }
     else {
-        glOrtho(-160.0 * (GLfloat)w / (GLfloat)h, 160.0 * (GLfloat)w / (GLfloat)h, -160.0, 160.0, -10.0, 10.0);
+        glOrtho(0.0 * (GLfloat)w / (GLfloat)h, 320.0 * (GLfloat)w / (GLfloat)h, 0, 320.0, -100.0, 100.0);
+    
     }
     glMatrixMode(GL_MODELVIEW);
 }
