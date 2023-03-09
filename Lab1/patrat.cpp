@@ -6,8 +6,9 @@
 #include "gl.h"
 #include "glu.h"
 #include "glaux.h"
+#include "glut.h"
 
-static GLfloat x = 0, y = 0, z, alfa=0;
+static GLfloat x = 0, y = 0, z=0, alfa=0;
 
 void myInit() {
     glClearColor(1.0, 1.0, 1.0, 1.0);//cod culoare rgb +transparenta
@@ -49,12 +50,16 @@ void CALLBACK rot_z_down(AUX_EVENTREC* event)
 void CALLBACK display()
 {
     glClear(GL_COLOR_BUFFER_BIT);
+    glMatrixMode(GL_MODELVIEW);
 
     glLoadIdentity();
+    glPushMatrix();
+   
 
-    glTranslatef(x, y, 0);
-    
+    glTranslatef(x, y, z);
+  
     glRotatef(alfa, 0, 0, 1);
+
 
     glBegin(GL_QUADS);
     {
@@ -67,8 +72,13 @@ void CALLBACK display()
         glColor3f(0.0, 1.0, 0.0);//setez verde
         glVertex2f(100.0, 150.0);
     }
+  
     glEnd();
+    glColor3f(1.0f, 0.0f, 1.0f);
+    glOrtho(-1.0, 1.0, -1.0, 1.0, -10, 20);
+    glutWireSphere(50.0, 20, 20);
 
+    glPopMatrix();
     glFlush();
 }
 
@@ -115,6 +125,7 @@ int main(int argc, char** argv)
     auxMouseFunc(AUX_LEFTBUTTON, AUX_MOUSEDOWN, rot_z_up);
     auxMouseFunc(AUX_RIGHTBUTTON, AUX_MOUSEDOWN, rot_z_down);
     
+   //auxWireSphere(myReshape);
 
     auxReshapeFunc(myReshape);
     auxMainLoop(display);
